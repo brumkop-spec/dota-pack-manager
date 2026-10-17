@@ -1,0 +1,87 @@
+@property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+@property --gc{syntax:"<color>";initial-value:#b026ff;inherits:false}
+@keyframes spin{to{--a:360deg}}
+@keyframes glow{0%,100%{--gc:#b026ff}25%{--gc:#ff4df2}50%{--gc:#6a5cff}75%{--gc:#4d9cff}}
+@keyframes slide{to{background-position:200% 0}}
+@keyframes glitch{0%,92%,100%{transform:none;text-shadow:2px 0 #ff4df2,-2px 0 #6a9cff}93%{transform:translateX(-3px);text-shadow:-5px 0 #ff4df2,5px 0 #6a9cff}95%{transform:translateX(3px);text-shadow:5px 0 #ff4df2,-5px 0 #6a9cff}97%{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+:root{--bg:#07040e;--sf:#100a1d;--cy:#c77dff;--mg:#b026ff;--tx:#f1eaff;--mu:#9a8fb8;--ring:conic-gradient(from var(--a),#7b2cff,#b026ff,#ff4df2,#6a5cff,#4d9cff,#c77dff,#7b2cff)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:radial-gradient(900px 500px at 85% -10%,rgba(176,38,255,.28),transparent),radial-gradient(800px 500px at 0 110%,rgba(77,124,255,.16),transparent),var(--bg);
+ color:var(--tx);font-family:"Segoe UI",system-ui,sans-serif;overflow:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(176,76,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(176,76,255,.05) 1px,transparent 1px);background-size:44px 44px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:70;opacity:.45;background:repeating-linear-gradient(0deg,rgba(0,0,0,.2) 0 1px,transparent 1px 3px)}
+
+/* фоновый арт */
+#bgart{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#bgart::before{content:"";position:absolute;right:-7%;top:50%;width:min(100vh,940px);aspect-ratio:1;transform:translateY(-50%);background:url("assets/bg.jpg") center/contain no-repeat;
+ mix-blend-mode:screen;opacity:.6;filter:saturate(1.25) contrast(1.05);animation:breathe 7s ease-in-out infinite;
+ -webkit-mask-image:radial-gradient(closest-side,#000 52%,transparent 100%);mask-image:radial-gradient(closest-side,#000 52%,transparent 100%)}
+#bgart::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,4,14,.55),transparent 55%)}
+@keyframes breathe{0%,100%{opacity:.5;transform:translateY(-50%) scale(1)}50%{opacity:.82;transform:translateY(-50%) scale(1.04)}}
+body.no-fx #bgart{display:none}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:5}
+#app{position:relative;z-index:1;display:flex;height:100%;padding:12px;gap:12px}
+
+/* переливающийся неоновый контур */
+aside,.card,.pane,.set,.modal,.status,.mod,.toast,nav button.on,.btn:not(.pri):hover,input:focus,select:focus{
+ border:1.5px solid transparent;
+ background:linear-gradient(var(--fill,var(--sf)),var(--fill,var(--sf))) padding-box,var(--ring) border-box;
+ animation:spin 5s linear infinite,glow 7s linear infinite;box-shadow:0 0 18px -4px var(--gc)}
+
+aside{width:236px;padding:18px 14px;border-radius:18px;display:flex;flex-direction:column;gap:20px}
+.logo{display:flex;gap:11px;align-items:center;font-family:Bahnschrift,"Segoe UI",sans-serif;letter-spacing:3px;font-size:13px;text-transform:uppercase}
+.logo small{display:block;color:var(--mu);letter-spacing:2px;font-size:10px}
+.logo b{background:linear-gradient(90deg,#b026ff,#ff4df2,#6a9cff,#b026ff);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:slide 4s linear infinite}
+.mark{width:44px;height:44px;border-radius:11px;box-shadow:0 0 16px rgba(176,76,255,.5)}
+nav{display:flex;flex-direction:column;gap:7px;flex:1}
+nav button{text-align:left;padding:12px 14px;border:1.5px solid transparent;border-radius:11px;background:none;color:var(--mu);font:600 13px Bahnschrift,"Segoe UI",sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.2s}
+nav button:hover{color:var(--tx);background:rgba(255,255,255,.05)}
+nav button.on{color:#fff;--fill:#1d1036}
+.status{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--mu);padding:11px;border-radius:12px}
+.dot{width:10px;height:10px;border-radius:50%;background:#555;flex-shrink:0}.dot.on{background:#2dff7a;box-shadow:0 0 12px #2dff7a}
+main{flex:1;padding:14px 18px;overflow:auto;border-radius:18px}
+.view{animation:fade .35s ease}
+h2{margin:0 0 20px;font:700 26px Bahnschrift,"Segoe UI",sans-serif;text-transform:uppercase;letter-spacing:5px;animation:glitch 6s infinite;text-shadow:2px 0 #ff4df2,-2px 0 #6a9cff}
+.bar{display:flex;gap:10px;margin-bottom:20px}
+input,select{--fill:#0a0613;background:#0a0613;border:1.5px solid #34205a;color:var(--tx);border-radius:11px;padding:11px 13px;font-size:14px;outline:none}input.grow{flex:1}
+.btn{border:1.5px solid rgba(255,255,255,.13);background:#150d25;color:var(--tx);border-radius:11px;padding:10px 16px;font-size:13px;cursor:pointer;transition:.2s}
+.btn.pri{background:linear-gradient(135deg,#8a2cff,#e040fb);border-color:transparent;font-weight:700;letter-spacing:.8px;text-transform:uppercase;font-size:12px}
+.btn.pri:hover{filter:brightness(1.18);box-shadow:0 0 24px rgba(176,38,255,.75)}
+.btn.big{padding:14px;width:100%;font-size:13px}.btn.dng{color:#ff7ae6;border-color:rgba(176,38,255,.4)}.btn:disabled{opacity:.4;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;padding:4px}
+.card{border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s}
+.card:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 0 30px -2px var(--gc)}.card.active{--fill:#24103f}
+.cover{height:140px;background-size:cover;background-position:center;cursor:pointer;position:relative}
+.chip{position:absolute;top:10px;right:10px;font-size:11px;padding:3px 9px;border-radius:20px;background:rgba(0,0,0,.7);border:1px solid var(--cy);color:var(--cy)}.chip.mg{border-color:var(--mg);color:var(--mg)}
+.cb{padding:13px 14px;display:flex;flex-direction:column;gap:8px;flex:1}.cb .n{font-weight:700;letter-spacing:.5px}.cb .d{font-size:12px;color:var(--mu);flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:5px}.tag{font-size:11px;padding:2px 9px;border-radius:20px;background:rgba(176,38,255,.14);color:#d9a0ff}
+.row{display:flex;gap:8px}.row .btn{flex:1;padding:9px}.empty{color:var(--mu);text-align:center;margin-top:90px}
+.builder{display:grid;grid-template-columns:200px 1fr 290px;gap:16px;height:calc(100% - 56px)}
+.pane{border-radius:16px;padding:14px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.cat{padding:10px 12px;border-radius:9px;cursor:pointer;color:var(--mu);font-size:14px;border:1px solid transparent}.cat:hover{color:var(--tx)}
+.cat.on{color:var(--cy);border-color:rgba(176,76,255,.3);background:rgba(176,76,255,.08)}
+.mod{--fill:#160d27;display:flex;gap:10px;align-items:center;padding:8px;border-radius:12px;animation-duration:7s,9s}
+.mod .pv{width:54px;height:54px;border-radius:8px;background-size:cover;background-position:center;flex-shrink:0}
+.mod .t{flex:1;min-width:0}.mod .t b{display:block;font-size:14px}.mod .t span{font-size:12px;color:var(--mu)}.mod .btn{padding:6px 12px}
+.set{border-radius:16px;padding:4px 20px;max-width:740px;margin-bottom:18px}
+.srow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06)}.srow:last-child{border:0}
+.srow small{display:block;color:var(--mu);font-size:12px;margin-top:3px}
+.sw{width:46px;height:24px;border-radius:20px;background:#2a1d44;position:relative;cursor:pointer;transition:.2s;flex-shrink:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#aaa;transition:.2s}
+.sw.on{background:linear-gradient(90deg,#7b2cff,#e040fb);box-shadow:0 0 12px rgba(176,76,255,.5)}.sw.on::after{left:25px;background:#fff}
+#modals .ov{position:fixed;inset:0;background:rgba(3,3,8,.78);backdrop-filter:blur(5px);display:grid;place-items:center;z-index:50;animation:fade .25s}
+.modal{--fill:#0d0818;width:min(720px,92vw);max-height:90vh;overflow:auto;border-radius:18px;border-width:2px;padding:22px;display:flex;flex-direction:column;gap:14px;animation:spin 5s linear infinite,glow 7s linear infinite,pop .25s}
+.modal.sm{width:min(460px,92vw)}.modal h3{margin:0;font:700 20px Bahnschrift,"Segoe UI",sans-serif;letter-spacing:2px;text-transform:uppercase}.pre{white-space:pre-line;color:var(--mu);font-size:14px;line-height:1.5}
+.gal{height:260px;border-radius:12px;background-size:cover;background-position:center;position:relative;border:1.5px solid rgba(176,76,255,.35)}
+.gal button{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:1px solid var(--cy);background:rgba(0,0,0,.65);color:var(--cy);cursor:pointer}
+.gal .l{left:10px}.gal .r{right:10px}.items{display:flex;flex-direction:column;gap:6px;font-size:13px}.items div{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.05)}.items i{color:var(--cy);font-style:normal;margin-right:8px}
+.bar-o{height:10px;border-radius:10px;background:#1d1330;overflow:hidden}
+.bar-i{height:100%;width:0;background:linear-gradient(90deg,#7b2cff,#e040fb,#4d9cff,#b026ff,#7b2cff);background-size:200% 100%;animation:slide 1.4s linear infinite;transition:width .25s}
+#toasts{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:8px;z-index:90}.toast{border-radius:12px;padding:12px 16px;max-width:340px;font-size:13px}
+::-webkit-scrollbar{width:9px}::-webkit-scrollbar-thumb{background:linear-gradient(#7b2cff,#e040fb);border-radius:9px}::-webkit-scrollbar-track{background:transparent}
+body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!important;transition:none!important}
+body.no-fx::before,body.no-fx::after{display:none}body.no-fx{background:var(--bg)}
+body.no-fx :is(aside,.card,.pane,.set,.modal,.status,.mod,.toast,nav button.on,.btn,input,select){background:linear-gradient(var(--fill,var(--sf)),var(--fill,var(--sf))) padding-box,linear-gradient(rgba(176,76,255,.35),rgba(176,76,255,.35)) border-box!important;box-shadow:none!important;animation:none!important}
+body.no-fx .card:hover{transform:none}

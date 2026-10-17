@@ -1,0 +1,7 @@
+{
+  "name": "Пример пака",
+  "description": "Положи сюда pak01_dir.vpk, preview.png и скриншоты в shots/. Эту папку можно удалить.",
+  "tags": ["пример"],
+  "version": 1,
+  "items": [{ "category": "skins", "name": "Название скина", "description": "Что меняет" }]
+}
